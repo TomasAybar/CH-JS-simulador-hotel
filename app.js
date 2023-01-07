@@ -1,151 +1,197 @@
 // Hoteleria
 
-/**
- * Consultarle al usuario el nombre
- * Darle la bienvenida y pasarle la informacion de precios y habitaciones del hotel para darle a elegir la opcion
- * una vez elegida su opcion, sumarle el precio del servicio de cama
- * preguntarle si desea elegir algun servicio extra
- * si dice que si, mostrarle las opciones y agregarlas
- * si dice que no, terminar la operacion con los valores de todo
- * 
- * 
- */
+// VARIABLES
+const precioNocheBase = 3000;
+const precioNocheFull = 3500;
+const precioNochePremium = 4000;
 
-// Recibe como parametro la eleccion de la habitacion
-const SwElegirHabitacion = ( eleccion ) => {
+const precioServicioWifi = 1000;
+const precioServicioDesayuno = 2000;
+const precioServicioTV = 1200;
+
+let tipoDeHabitacion = '';
+let servicio = '';
+
+// FUNCIONES
+
+// Recibe como parametro la eleccion de la habitacion y ejecuta funcion alerta habitacion
+const seleccionHabitacion = (eleccion) => {
+
+    let quieroAgregarUnServicioExtra;
 
     switch (eleccion) {
 
+
         case 'A':
-            alert('Ha seleccionado habitacion base, tiene un valor de $3000 la noche');
 
-            const confirmacionDeServicio1 = confirm('Desea agregar algun servicio extra de mas, como por ejemplo, wifi, tv, desayuno?');
+            quieroAgregarUnServicioExtra = alertaSeleccionHabitacion('base', precioNocheBase);
 
-            if ( confirmacionDeServicio1 ) {
+            if (quieroAgregarUnServicioExtra) {
 
-                elegirServicioExtra();
+                seleccionarServicio();
 
             } else {
 
-                resultadoFinal();
+                resultadoFinal(0);
                 break;
 
             }
 
         case 'B':
-            alert('Ha seleccionado habitacion full, tiene un valor de $3500 la noche');
-            
-            const confirmacionDeServicio2 = confirm('Desea agregar algun servicio extra de mas, como por ejemplo, wifi, tv, desayuno?');
 
-            if ( confirmacionDeServicio2 ) {
+            quieroAgregarUnServicioExtra = alertaSeleccionHabitacion('full', precioNocheFull);
 
-                elegirServicioExtra();
+            if (quieroAgregarUnServicioExtra) {
+
+                seleccionarServicio();
 
             } else {
 
-                resultadoFinal();
+                resultadoFinal(0);
                 break;
 
             }
 
         case 'C':
-            alert('Ha seleccionado habitacion premium, tiene un valor de $4000 la noche');
-            
-            const confirmacionDeServicio3 = confirm('Desea agregar algun servicio extra de mas, como por ejemplo, wifi, tv, desayuno?');
 
-            if ( confirmacionDeServicio3 ) {
+            quieroAgregarUnServicioExtra = alertaSeleccionHabitacion('premium', precioNochePremium);
 
-                elegirServicioExtra();
+            if (quieroAgregarUnServicioExtra) {
+
+                seleccionarServicio();
 
             } else {
 
-                resultadoFinal();
+                resultadoFinal(0);
                 break;
 
             }
-    
+
         default:
             break;
     }
 }
 
-const deseaAgregarMasServicios = (servicio) => {
+// Muestra el servicio y precio de servicio elegido y ejecuta la fn resultadoFinal();
+const alertaSeleccionServicio = (precioServicio) => {
 
-    const agregarMasServicios = confirm(`Ha seleccionado servicio de "${ servicio.toUpperCase() }", desea seleccionar un servicio mas?`);
+    alert(`Ha seleccionado servicio de "${servicio.toUpperCase()}" y se le agregara un valor extra de $${precioServicio}`);
 
-            if ( agregarMasServicios ) {
-
-                // deberia volver a entrar al switch
-                elegirServicioExtra();
-
-            } else {
-
-                resultadoFinal();
-
-            }
-}
-
-const resultadoFinal = (tipoDeHabitacion, servicios) => {
-
-    alert(`Usted sera hospedad en la habitacion ${ tipoDeHabitacion }
-
-            Y se agregaron los servicios de ${ servicios }
-
-            Disfrute su estadia!
-
-    `)
+    resultadoFinal(precioServicio);
 
 }
 
-const elegirServicioExtra = () => {
+// Seleccion de un servicio extra y muestreo de mensaje del servicio seleccionado
+const seleccionarServicio = () => {
 
-    const elegirServicio = prompt(`Seleccione un servicio:\n A) Wifi\n B) Desayuno a la habitacion\n C) TV 4K\n`);
+    const elegirServicio = prompt(`Seleccione un servicio:\n A) Wifi - $${precioServicioWifi}\n B) Desayuno a la habitacion $${precioServicioDesayuno}\n C) TV 4K - $${precioServicioTV}\n`);
 
     switch (elegirServicio) {
 
         case 'A':
 
-            // alert('Se ha agregado wifi a su hospedaje');
-            deseaAgregarMasServicios('wifi');
+            servicio = 'wifi';
+            alertaSeleccionServicio(precioServicioWifi);
 
             break;
 
         case 'B':
 
-            // alert('Se ha agregado desayuno a la habitacion a su hospedaje');
-            deseaAgregarMasServicios('desayuno a la habitacion');
+            servicio = 'desayuno a la habitacion';
+            alertaSeleccionServicio(precioServicioDesayuno);
 
             break;
         case 'C':
 
-            // alert('Se ha agregado TV 4K a su hospedaje');
-            deseaAgregarMasServicios('tv 4k');
+            servicio = 'tv 4k';
+            alertaSeleccionServicio(precioServicioTV);
 
             break;
     }
 
+}
+
+// Imprime los resultados finales
+const resultadoFinal = (precioServicio) => {
+
+    let valorHabitacion = 0;
+
+    switch (tipoDeHabitacion) {
+        case 'base':
+            valorHabitacion = precioNocheBase;
+            break;
+
+        case 'full':
+            valorHabitacion = precioNocheFull;
+            break;
+
+        case 'premium':
+            valorHabitacion = precioNochePremium;
+            break;
+
+        default:
+            break;
+    }
+
+
+    if ( precioServicio === 0 ) {
+
+        alert(`
+                Usted sera hospedado en la habitacion "${tipoDeHabitacion.toUpperCase()}" ${cantidadNoches} noches. = $${valorHabitacion * cantidadNoches}
+
+                No se han agregado servicios extras = $${ precioServicio }
+    
+                El total a abonar es de $${ valorHabitacion * cantidadNoches }
+    
+                Disfrute su estadia!
+    
+        `)
+
+    } else {
+
+        alert(`
+                Usted sera hospedado en la habitacion "${tipoDeHabitacion.toUpperCase()}" ${cantidadNoches} noches. = $${valorHabitacion * cantidadNoches}
+    
+                Y se agrego el servicio de "${servicio.toUpperCase()}" por un valor de $${precioServicio}
+    
+                El total a abonar es de $${(valorHabitacion * cantidadNoches) + precioServicio}
+    
+                Disfrute su estadia!
+    
+        `)
+    }
+
+
+}
+
+// Muesta la habitacion y el valor de seleccionado y devuelve un booleano a la pregunta si desea servicios
+const alertaSeleccionHabitacion = (eleccion, precioNoche) => {
+    alert(`Ha seleccionado habitacion "${eleccion.toUpperCase()}", tiene un valor de $${precioNoche} la noche`);
+
+    tipoDeHabitacion = eleccion;
+
+    return confirm('Desea agregar algun servicio extra de mas, como por ejemplo, wifi, tv, desayuno?');
+
+    // return confirmacionDeServicio;
 }
 
 // Pide el nombre al usuario
 const nombreApellido = prompt('Escriba su nombre y apellido');
 
 // Cantidad de noches a hospedarse
-const cantidadNoches = parseInt(prompt(`Bienvenido al hotel codeFull ${ nombreApellido }.\nA continuacion te vamos a pedir que escribas la cantidad de noches que te vas a hospedar.`)); 
+const cantidadNoches = parseInt(prompt(`Bienvenido al hotel codeFull ${nombreApellido}.\nA continuacion te vamos a pedir que escribas la cantidad de noches que te vas a hospedar.`));
 
-const valorPorNocheBase = 3000;
-const valorPorNocheFull = 3500;
-const valorPorNochePremium = 4000;
 
-const confirmacionDeHospedaje = confirm(`${ nombreApellido }, el valor por noche es de $${ valorPorNocheBase } en la habitacion base.\nEl valor total es de $${ cantidadNoches*valorPorNocheBase }.\nPresione "OK" para continuar, de lo contrario presione "Cancel"`);
+const confirmacionDeHospedaje = confirm(`${nombreApellido}, el valor por noche es de $${precioNocheBase} en la habitacion base.\nEl valor total es de $${cantidadNoches * precioNocheBase}.\nPresione "OK" para continuar, de lo contrario presione "Cancel"`);
 
 // condicional si decide o no hospedarse
-if ( confirmacionDeHospedaje ) {
+if (confirmacionDeHospedaje) {
 
     // Elije la habitacion
     const elegirHabitacion = prompt(`Bienvenido a hotel codeFull Disfrute su estadia.\nSeleccione su habitacion:\n A) Habitacion base\n B) Habitacion full\n C) Habitacion premium\n`);
 
-    
-    SwElegirHabitacion(elegirHabitacion);
+
+    seleccionHabitacion(elegirHabitacion);
 
 
 } else {
