@@ -84,7 +84,12 @@ const alertaSeleccionServicio = (precioServicio) => {
 // Seleccion de un servicio extra y muestreo de mensaje del servicio seleccionado
 const seleccionarServicio = () => {
 
-    const elegirServicio = prompt(`Seleccione un servicio:\n A) Wifi - $${precioServicioWifi}\n B) Desayuno a la habitacion $${precioServicioDesayuno}\n C) TV 4K - $${precioServicioTV}\n`);
+    let elegirServicio = prompt(`Seleccione un servicio: \nA) Wifi - $${precioServicioWifi} \nB) Desayuno a la habitacion $${precioServicioDesayuno}\nC) TV 4K - $${precioServicioTV}`).toUpperCase();
+
+    while(elegirServicio !== 'A' && elegirServicio !== 'B' && elegirServicio !== 'C') {
+        
+        elegirServicio = prompt(`Opcion incorrecta vuelva a seleccionar su servicio.\nSeleccione su servicio:\nA) Wifi - $${precioServicioWifi}\nB) Desayuno a la habitacion - $${precioServicioDesayuno}\nC) TV 4K - $${precioServicioTV}`).toUpperCase();
+    }
 
     switch (elegirServicio) {
 
@@ -106,6 +111,9 @@ const seleccionarServicio = () => {
             servicio = 'tv 4k';
             alertaSeleccionServicio(precioServicioTV);
 
+            break;
+        
+        default:
             break;
     }
 
@@ -166,30 +174,40 @@ const resultadoFinal = (precioServicio) => {
 
 // Muesta la habitacion y el valor de seleccionado y devuelve un booleano a la pregunta si desea servicios
 const alertaSeleccionHabitacion = (eleccion, precioNoche) => {
+
     alert(`Ha seleccionado habitacion "${eleccion.toUpperCase()}", tiene un valor de $${precioNoche} la noche`);
 
     tipoDeHabitacion = eleccion;
 
     return confirm('Desea agregar algun servicio extra de mas, como por ejemplo, wifi, tv, desayuno?');
 
-    // return confirmacionDeServicio;
 }
 
 // Pide el nombre al usuario
-const nombreApellido = prompt('Escriba su nombre y apellido');
+const nombre = prompt('Escriba su nombre por favor..');
 
 // Cantidad de noches a hospedarse
-const cantidadNoches = parseInt(prompt(`Bienvenido al hotel codeFull ${nombreApellido}.\nA continuacion te vamos a pedir que escribas la cantidad de noches que te vas a hospedar.`));
+let cantidadNoches = parseInt(prompt(`Bienvenido al hotel codeFull ${nombre}.\nA continuacion te vamos a pedir que escribas la cantidad de noches que te vas a hospedar.`));
 
+    while( isNaN(cantidadNoches) || cantidadNoches < 1 ) {
 
-const confirmacionDeHospedaje = confirm(`${nombreApellido}, el valor por noche es de $${precioNocheBase} en la habitacion base.\nEl valor total es de $${cantidadNoches * precioNocheBase}.\nPresione "OK" para continuar, de lo contrario presione "Cancel"`);
+    cantidadNoches = parseInt(prompt(`La cantidad de noches a ingresar debe ser un numero y como minimo 1`));
+
+}
+
+const confirmacionDeHospedaje = confirm(`${nombre}, el valor por noche es de $${precioNocheBase} en la habitacion base.\nEl valor total es de $${cantidadNoches * precioNocheBase}.\nPresione "OK" para continuar, de lo contrario presione "Cancel"`);
 
 // condicional si decide o no hospedarse
 if (confirmacionDeHospedaje) {
 
     // Elije la habitacion
-    const elegirHabitacion = prompt(`Bienvenido a hotel codeFull Disfrute su estadia.\nSeleccione su habitacion:\n A) Habitacion base\n B) Habitacion full\n C) Habitacion premium\n`);
+    let elegirHabitacion = prompt(`Bienvenido a hotel codeFull Disfrute su estadia.\nSeleccione su habitacion:\n A) Habitacion base\n B) Habitacion full\n C) Habitacion premium\n`).toUpperCase();
 
+    while ( elegirHabitacion !== 'A' && elegirHabitacion !== 'B' && elegirHabitacion !== 'C' ) {
+
+        elegirHabitacion = prompt(`Opcion incorrecta vuelva a seleccionar su habitacion.\nSeleccione su habitacion:\nA) Habitacion base\nB) Habitacion full\nC) Habitacion premium`).toUpperCase();
+
+    }
 
     seleccionHabitacion(elegirHabitacion);
 
