@@ -54,6 +54,9 @@ if ( confirmRegistro ) {
 
     console.log('Bienvenido');
 
+
+    
+
 } else {
 
     alert('Gracias por su visita');
