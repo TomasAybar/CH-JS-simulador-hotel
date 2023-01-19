@@ -184,7 +184,14 @@ const alertaSeleccionHabitacion = (eleccion, precioNoche) => {
 }
 
 // Pide el nombre al usuario
-const nombre = prompt('Escriba su nombre por favor..');
+let nombre = prompt('Escriba su nombre por favor..');
+
+console.log(typeof nombre);
+while (typeof nombre !== 'string') {
+
+    nombre = prompt('Nombre incorrecto, vuelta a escribir su nombre por favor..');
+
+}
 
 // Cantidad de noches a hospedarse
 let cantidadNoches = parseInt(prompt(`Bienvenido al hotel codeFull ${nombre}.\nA continuacion te vamos a pedir que escribas la cantidad de noches que te vas a hospedar.`));
