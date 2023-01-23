@@ -55,6 +55,7 @@ const agregarCliente = () => {
 
     } while ( confirm('Desea agregar otro cliente?') )
 
+    // LLAMAR A LA FUNCION MENU PRINCIPAL
 
 
 }
@@ -78,6 +79,13 @@ const verClientes = (arrayClientes) => {
 
 }
 
+const menuPrincipal = () => {
+
+
+    
+
+}
+
 
 const nombreAdministrador = prompt('Bienvenido administrador, ingrese su nombre para comenzar a trabajar');
 
@@ -85,11 +93,13 @@ console.log(nombreAdministrador);
 
 alert(`Hola ${nombreAdministrador.toUpperCase()}, A continuacion se le mostrara una lista con las acciones disponibles para hacer`);
 
-// Menu principal
-let accionIngresada = prompt(`Ingrese la opcion de la accion que desea realizar\n A) Ver todos los clientes ingresados\n B) Agregar nuevo cliente\n C) Filtrar Cliente\n D) Eliminar un cliente`).toUpperCase();
 
-while (!['A', 'B', 'C', 'D'].includes(accionIngresada)) {
-    accionIngresada = prompt(`${'Opcion Incorrecta!!'.toUpperCase()}\nIngrese la opcion de la accion que desea realizar\n A) Ver todos los clientes ingresados\n B) Agregar nuevo cliente\n C) Filtrar Cliente\n D) Eliminar un cliente`).toUpperCase();
+
+// Menu principal
+let accionIngresada = prompt(`Ingrese la opcion de la accion que desea realizar\n A) Ver todos los clientes ingresados\n B) Agregar nuevo cliente\n C) Filtrar Cliente\n D) Eliminar un cliente\n E) Salir`).toUpperCase();
+
+while (!['A', 'B', 'C', 'D', 'E'].includes(accionIngresada)) {
+    accionIngresada = prompt(`${'Opcion Incorrecta!!'.toUpperCase()}\nIngrese la opcion de la accion que desea realizar\n A) Ver todos los clientes ingresados\n B) Agregar nuevo cliente\n C) Filtrar Cliente\n D) Eliminar un cliente\n E) Salir`).toUpperCase();
 }
 
 console.log(accionIngresada);
@@ -126,6 +136,13 @@ switch (accionIngresada) {
         console.log('La opcion elegida es la D');
 
         // LLAMAR A FUNCION ELIMINAR UN CLIENTE
+        break;
+    
+    case 'E':
+        console.log('la opcion elegida es la D');
+
+        // LLAMAR A LA FUNCION SALIR
+
         break;
 
     default:
