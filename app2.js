@@ -1,4 +1,3 @@
-
 /** CLASES */
 
 class Cliente {
@@ -35,6 +34,8 @@ const menuPrincipal = () => {
             // LLAMAR A FUNCION VER TODOS LOS CLIENTES INGRESADOS
     
             verClientes(clientes);
+
+            menuPrincipal();
     
             break;
     
@@ -114,7 +115,19 @@ const verClientes = (arrayClientes) => {
 
     let clientes = arrayClientes.map(cliente => `\nNOMBRE: ${ cliente.nombre }\nEDAD: ${cliente.edad }\nHABITACION: ${ cliente.habitacion }\nNOCHES: ${ cliente.cantidadNoches }\n`)
 
-    alert(clientes);
+    if ( arrayClientes.length > 0 ) {
+
+        alert(clientes);
+
+    }
+
+    else {
+
+        alert('No existen clientes para mostrar');
+        
+    }
+    
+    // menuPrincipal();
 
 
 }
@@ -129,7 +142,7 @@ const menuFiltrarCliente = () => {
 
     let accionIngresada = prompt(`Ingrese la accion que desea realizar\n A) Filtrar por nombre de cliente\n B) Filtrar por edad\n C) Filtrar por tipo de habitacion\n D) Filtrar por cantidad de noches\n E) Volver al menu principal`).toUpperCase();
 
-    while( !['A', 'B', 'C', 'D'].includes(accionIngresada) ) {
+    while( !['A', 'B', 'C', 'D', 'E'].includes(accionIngresada) ) {
 
             accionIngresada = prompt(`${'Opcion Incorrecta!!'.toUpperCase()}\nIngrese la accion que desea realizar\n A) Filtrar por nombre de cliente\n B) Filtrar por edad\n C) Filtrar por tipo de habitacion\n D) Filtrar por cantidad de noches\n E) Volver al menu principal`).toUpperCase();
 
@@ -139,12 +152,18 @@ const menuFiltrarCliente = () => {
         case 'A':
 
             // LLAMAR A FUNCION FILTRAR POR NOMBRE DE CLIENTE
+
+            filtrarPorNombre();
+            // menuFiltrarCliente();
             
             break;
 
         case 'B':
 
             // LLAMAR A FUNCION FILTRAR POR EDAD
+
+            filtrarPorEdad();
+            // menuFiltrarCliente();
             
             break;
 
@@ -157,12 +176,13 @@ const menuFiltrarCliente = () => {
         case 'D':
 
             // LLAMAR A FUNCION FILTRAR POR CANTIDAD DE NOCHES
+            filtrarPorCantNoches();
             
             break;
 
         case 'E':
 
-            // LLAMAR A FUNCION FILTRAR POR CANTIDAD DE NOCHES
+            // SALIR: VOLVER AL MENU PRINCIPAL
             menuPrincipal();
             
             break;
@@ -171,7 +191,8 @@ const menuFiltrarCliente = () => {
             break;
     }
 
-    menuPrincipal();
+    menuFiltrarCliente();
+    // menuPrincipal();
 }
 
 const filtrarPorNombre = () => {
@@ -184,7 +205,7 @@ const filtrarPorNombre = () => {
 
         verClientes(clientesFiltrados);
 
-        menuFiltrarCliente();
+        
     } 
     
     else {
@@ -193,10 +214,28 @@ const filtrarPorNombre = () => {
 
     }
 
+    // menuFiltrarCliente();
+
 }
 
 const filtrarPorEdad = () => {
 
+    const edad = parseInt( prompt('Ingrese la edad por el que desea filtrar') );
+
+    const clientesFiltrados = clientes.filter(cliente => cliente.edad === edad);
+
+    if ( clientesFiltrados.length > 0 ) {
+
+        verClientes(clientesFiltrados);
+
+        
+    } 
+    
+    else {
+
+        alert(`No se encontraron edades con el filtro: ${ edad }`);
+
+    }
 
 }
 
@@ -206,6 +245,22 @@ const filtrarPorHabitacion = () => {
 
 const filtrarPorCantNoches = () => {
 
+    const cantidadNoches = parseInt( prompt('Ingrese la cantidad de noches por el que desea filtrar') );
+
+    const clientesFiltrados = clientes.filter(cliente => cliente.cantidadNoches === cantidadNoches);
+
+    if ( clientesFiltrados.length > 0 ) {
+
+        verClientes(clientesFiltrados);
+
+        
+    } 
+    
+    else {
+
+        alert(`No se encontraron edades con el filtro: ${ cantidadNoches }`);
+
+    }
 
 }
 
