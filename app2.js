@@ -162,9 +162,6 @@ const agregarCliente = () => {
 
     } while ( confirm('Desea agregar otro cliente?') )
 
-    // LLAMAR A LA FUNCION MENU PRINCIPAL
-
-    menuPrincipal();
 
 
 }
