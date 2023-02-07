@@ -61,12 +61,12 @@ const crearCartas = (arrayCartas) => {
 
     arrayCartas.forEach(habitacion => {
 
-        contenedorCartas.innerHTML += `<div class="card" style="width: 18rem;" id=${ habitacion.id }>
-        <img src="${ habitacion.imagen }" class="card-img-top" alt="${ habitacion.nombre }">
+        contenedorCartas.innerHTML += `<div class="card" style="width: 18rem;" id=${habitacion.id}>
+        <img src="${habitacion.imagen}" class="card-img-top" alt="${habitacion.nombre}">
         <div class="card-body">
-            <h5 class="card-title">${ habitacion.nombre }</h5>
-            <p class="card-text">${ habitacion.descripcion }</p>
-            <button class="btn btn-primary" id=${ habitacion.id }>Reservar</button>
+            <h5 class="card-title">${habitacion.nombre}</h5>
+            <p class="card-text">${habitacion.descripcion}</p>
+            <button class="btn btn-primary" id=${habitacion.id}>Reservar</button>
         </div>
     </div>`
 
@@ -77,11 +77,11 @@ const crearCarta = (carta) => {
 
     return (
         `<div class="card" style="width: 18rem;">
-            <img src="${ carta.imagen }" class="card-img-top" alt="${ carta.nombre }">
+            <img src="${carta.imagen}" class="card-img-top" alt="${carta.nombre}">
             <div class="card-body">
-                <h5 class="card-title">${ carta.nombre }</h5>
-                <p class="card-text">${ carta.descripcion }</p>
-                <a href="#" class="btn btn-primary" id="${ carta.id }" >Reservar</a>
+                <h5 class="card-title">${carta.nombre}</h5>
+                <p class="card-text">${carta.descripcion}</p>
+                <a href="#" class="btn btn-primary" id="${carta.id}" >Reservar</a>
             </div>
         </div>`
     )
@@ -108,12 +108,13 @@ crearCartas(habitaciones);
 
 contenedorCartas.addEventListener('click', (e) => {
 
-    if ( e.target.classList[0] === 'btn'  ) {
+    if (e.target.classList[0] === 'btn') {
 
 
-        buscarYagregarProducto( Number( e.target.id ) );
+        buscarYagregarProducto(Number(e.target.id));
 
 
     }
 })
+
 
