@@ -1,6 +1,6 @@
 // data
 const HABITACIONES_URL = 'https://63f800195b0e4a127ddeeea3.mockapi.io/api/habitaciones';
-const ACCIONES_URL = 'https://63f800195b0e4a127ddeeea3.mockapi.io/api/acciones'
+const ACCIONES_URL = 'https://63f800195b0e4a127ddeeea3.mockapi.io/api/acciones';
 
 
 // variables
@@ -18,6 +18,7 @@ const selectAcciones = document.querySelector('#form-acciones select');
 const selectEliminar = document.querySelector('#form-eliminar select');
 const tablaClientes = document.querySelector('#tabla-clientes');
 const inputNacimiento = document.querySelector('#edad');
+const alertaClientes = document.querySelector('#alerta-clientes');
 
 
 
@@ -40,7 +41,7 @@ class Cliente {
  */
 const validarInputDate = () => {
     let fechaActual = new Date().toISOString().slice(0, 10);
-    inputNacimiento.setAttribute('max', fechaActual)
+    inputNacimiento.setAttribute('max', fechaActual);
 }
 
 /**
@@ -50,15 +51,15 @@ const traerHabitaciones = async () => {
 
     try {
 
-        const respuesta = await fetch(HABITACIONES_URL)
+        const respuesta = await fetch(HABITACIONES_URL);
 
-        habitaciones = await respuesta.json()
+        habitaciones = await respuesta.json();
 
-        createOptions(selectHabitacion, habitaciones)
+        createOptions(selectHabitacion, habitaciones);
 
     } catch (error) {
 
-        console.log(error)
+        console.log(error);
 
     }
 
@@ -70,15 +71,15 @@ const traerHabitaciones = async () => {
 const traerAcciones = async () => {
     try {
 
-        const respuesta = await fetch(ACCIONES_URL)
+        const respuesta = await fetch(ACCIONES_URL);
 
-        acciones = await respuesta.json()
+        acciones = await respuesta.json();
 
         createOptions(selectAcciones, acciones);
 
     } catch (error) {
 
-        console.log(error)
+        console.log(error);
 
     }
 }
@@ -115,7 +116,7 @@ const createOptions = (nodo, array) => {
  */
 const buscarHabitacion = (id) => {
 
-    const habitacionElegida = habitaciones.find(habitacion => habitacion.id === id)
+    const habitacionElegida = habitaciones.find(habitacion => habitacion.id === id);
 
     return habitacionElegida;
 
@@ -148,6 +149,7 @@ const ocultarTodos = () => {
     formAgregarCliente.style.display = 'none';
     tablaClientes.style.display = 'none';
     formEliminar.style.display = 'none';
+    alertaClientes.style.display = 'none';
 
 }
 
@@ -157,8 +159,6 @@ const ocultarTodos = () => {
  * @param {string} type atributo del style, block, none, inline, etc
  */
 const cambiarEstilo = (elemento, type) => {
-
-    // elemento.setAttribute('style', `display: ${style};`);
 
     elemento.style.display = type;
 
@@ -182,17 +182,32 @@ const redirigir = (id) => {
 
         case 2:
 
-            createTable();
+            if (clientes.length <= 0) {
 
-            cambiarEstilo(tablaClientes, 'table');
+                cambiarEstilo(alertaClientes, 'block');
+
+            } else {
+
+                createTable();
+
+                cambiarEstilo(tablaClientes, 'table');
+            }
+
 
             break;
 
         case 3:
 
-            createOptions(selectEliminar, clientes);
+            if (clientes.length <= 0) {
 
-            cambiarEstilo(formEliminar, 'block');
+                cambiarEstilo(alertaClientes, 'block');
+
+            } else {
+
+                createOptions(selectEliminar, clientes);
+
+                cambiarEstilo(formEliminar, 'block');
+            }
 
             break;
 
@@ -224,6 +239,7 @@ const setearClientesStorage = (clientes) => {
     localStorage.setItem('clientes', JSON.stringify(clientes));
 
 }
+
 
 
 // code
@@ -284,13 +300,22 @@ formEliminar.addEventListener('submit', (e) => {
 
             createOptions(selectEliminar, clientesFiltrados);
 
-            Swal.fire('¡Cliente eliminado con éxito!', '', 'success')
+            Swal.fire('¡Cliente eliminado con éxito!', '', 'success');
+
+            if (clientes.length <= 0) {
+
+                ocultarTodos();
+                cambiarEstilo(alertaClientes, 'block');
+
+            }
+
 
         } else {
 
-            Swal.fire('La acción ha sido cancelada', '', 'info')
+            Swal.fire('La acción ha sido cancelada', '', 'info');
 
         }
     })
+
 })
 
