@@ -1,74 +1,12 @@
 // data
-const habitaciones = [
-    {
-        id: 1,
-        nombre: 'Habitación Clásica',
-        precioNoche: 2000,
-        imagen: 'https://www.argentinohotelmdp.com.ar/wp-content/uploads/0103-900x600.jpg',
-        descripcion: 'Las habitaciones son luminosas y disponen de suelo de alfombra o flotante con TV por cable. Baño privado con ducha o bañera. La habitación posee ventilador, calefacción central.',
-    },
-    {
-        id: 2,
-        nombre: 'Habitación Superior',
-        precioNoche: 2500,
-        imagen: 'https://www.argentinohotelmdp.com.ar/wp-content/uploads/2-1-900x600.jpg',
-        descripcion: 'Las habitaciones son luminosas y disponen de suelo de alfombra o flotante con TV LED 32" con canales por cable, minibar y aire acondicionado; algunas habitaciones cuentan con caja de seguridad. Baño privado con ducha o bañera.',
-    },
-    {
-        id: 3,
-        nombre: 'Habitación Suite',
-        precioNoche: 3000,
-        imagen: 'https://www.argentinohotelmdp.com.ar/wp-content/uploads/0201-1-900x600.jpg',
-        descripcion: 'Con somier matrimonial, confortable área de estar, modernos y amplios baños con secador de cabello, LCD de 32" , aire acondicionado, frigobar. Las mismas poseen piso flotantes o alfombra.',
-    },
-    {
-        id: 4,
-        nombre: 'Habitación Deluxe',
-        precioNoche: 4000,
-        imagen: 'https://www.argentinohotelmdp.com.ar/wp-content/uploads/0302-900x600.jpg',
-        descripcion: 'Las habitaciones cuentan con pisos de porcelanato claro o madera flotante, Tv por cable, wifi y baños con ducha o bañera.',
-    },
-    {
-        id: 5,
-        nombre: 'Habitación Triple',
-        precioNoche: 3500,
-        imagen: 'https://www.argentinohotelmdp.com.ar/wp-content/uploads/202201-hab-triples-01-900x600.jpg',
-        descripcion: 'Es una habitación compuesta por 3 camas, que pueden ser matrimonial y una individual o tres individuales. Baño con secador de cabello. Tv pantalla plana 32". Posee piso flotante',
-    },
-    {
-        id: 6,
-        nombre: 'Habitación Depto',
-        precioNoche: 5000,
-        imagen: 'https://www.argentinohotelmdp.com.ar/wp-content/uploads/habitacion-depto-01-900x600.jpg',
-        descripcion: 'Distribuidos en dos habitaciones, donde encontramos una cama matrimonial en un primer dormitorio y una individual en un segundo dormitorio, moderno baño con secador de cabello. Posee aire acondicionado. Se puede encontrar habitaciones con piso de madera o alfombra.',
-    },
-    {
-        id: 7,
-        nombre: 'Apart 1',
-        precioNoche: 4500,
-        imagen: 'https://www.argentinohotelmdp.com.ar/wp-content/uploads/221020-apart-01-04-900x600.jpg',
-        descripcion: 'Nuestro apart cuenta con la comodidad ideal para tres personas. Se trata de un departamento de un ambiente. Posee tv por cable y ventilador, Podrá acceder al primer piso por escalera.',
-    },
-]
-
-const acciones = [
-    {
-        id: 1,
-        nombre: 'Agregar clientes',
-    },
-    {
-        id: 2,
-        nombre: 'Mostrar clientes'
-    },
-    {
-        id: 3,
-        nombre: 'Eliminar clientes'
-    }
-]
+const HABITACIONES_URL = 'https://63f800195b0e4a127ddeeea3.mockapi.io/api/habitaciones';
+const ACCIONES_URL = 'https://63f800195b0e4a127ddeeea3.mockapi.io/api/acciones'
 
 
 // variable
 let clientes = [];
+let habitaciones = [];
+let acciones = [];
 
 
 // dom
@@ -94,6 +32,47 @@ class Cliente {
 
     }
 }
+
+/**
+ * Fetch a base de datos de habitaciones
+ */
+const traerHabitaciones = async () => {
+
+    try {
+
+        const respuesta = await fetch(HABITACIONES_URL)
+
+        habitaciones = await respuesta.json()
+
+        createOptions(selectHabitacion, habitaciones)
+
+    } catch (error) {
+
+        console.log(error)
+
+    }
+
+}
+
+/**
+ * Fetch a base de datos de acciones
+ */
+const traerAcciones = async () => {
+    try {
+
+        const respuesta = await fetch(ACCIONES_URL)
+
+        acciones = await respuesta.json()
+
+        createOptions(selectAcciones, acciones);
+
+    } catch (error) {
+
+        console.log(error)
+
+    }
+}
+
 /**
  * 
  * @returns {string} id generico
@@ -101,6 +80,7 @@ class Cliente {
 const generarID = () => {
     return Math.random().toString(30).substring(2);
 }
+
 /**
  * 
  * @param { select } nodo nodo del select donde se renderizaran las options
@@ -125,7 +105,7 @@ const createOptions = (nodo, array) => {
  */
 const buscarHabitacion = (id) => {
 
-    const habitacionElegida = habitaciones.find(habitacion => habitacion.id === Number(id))
+    const habitacionElegida = habitaciones.find(habitacion => habitacion.id === id)
 
     return habitacionElegida;
 
@@ -217,13 +197,9 @@ const redirigir = (id) => {
  */
 const verificarStorage = () => {
 
-    console.log(clientes);
-
     if (localStorage.getItem('clientes')) {
 
         clientes = JSON.parse(localStorage.getItem('clientes'));
-
-        console.log(clientes);
 
     }
 
@@ -242,11 +218,12 @@ const setearClientesStorage = (clientes) => {
 
 // code
 verificarStorage();
-createOptions(selectHabitacion, habitaciones);
-createOptions(selectAcciones, acciones);
+traerHabitaciones();
+traerAcciones();
 createOptions(selectEliminar, clientes);
 
 
+// Formularios
 formAgregarCliente.addEventListener('submit', (e) => {
 
     e.preventDefault();
@@ -256,6 +233,13 @@ formAgregarCliente.addEventListener('submit', (e) => {
     setearClientesStorage(clientes);
 
     formAgregarCliente.reset();
+
+    Swal.fire({
+        title: 'Felicitaciones!',
+        text: 'Cliente agregado con exito!',
+        icon: 'success',
+    })
+
 })
 
 formAcciones.addEventListener('submit', (e) => {
@@ -270,12 +254,37 @@ formEliminar.addEventListener('submit', (e) => {
 
     e.preventDefault();
 
-    let clientesFiltrados = clientes.filter(cliente => cliente.id != e.target['eliminar-cliente'].value);
+    Swal.fire({
+        title: 'Atencion!',
+        text: 'Estas seguro de que deseas eliminar este cliente?',
+        icon: 'warning',
+        showDenyButton: true,
+        confirmButtonText: 'Aceptar',
+        denyButtonText: `Cancelar`,
+    }).then((result) => {
 
-    clientes = [...clientesFiltrados];
+        if (result.isConfirmed) {
 
-    setearClientesStorage(clientes);
+            let clientesFiltrados = clientes.filter(cliente => cliente.id != e.target['eliminar-cliente'].value);
 
-    createOptions(selectEliminar, clientesFiltrados);
+            clientes = [...clientesFiltrados];
+
+            setearClientesStorage(clientes);
+
+            createOptions(selectEliminar, clientesFiltrados);
+
+            Swal.fire('Cliente eliminado con exito!', '', 'success')
+
+        } else {
+
+            Swal.fire('La accion ha sido cancelada', '', 'info')
+
+
+        }
+    })
+
+
+
+
 })
 
