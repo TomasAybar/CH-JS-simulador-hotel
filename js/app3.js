@@ -290,12 +290,7 @@ formEliminar.addEventListener('submit', (e) => {
 
             Swal.fire('La acción ha sido cancelada', '', 'info')
 
-
         }
     })
-
-
-
-
 })
 
