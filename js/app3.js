@@ -3,7 +3,7 @@ const HABITACIONES_URL = 'https://63f800195b0e4a127ddeeea3.mockapi.io/api/habita
 const ACCIONES_URL = 'https://63f800195b0e4a127ddeeea3.mockapi.io/api/acciones'
 
 
-// variable
+// variables
 let clientes = [];
 let habitaciones = [];
 let acciones = [];
@@ -17,6 +17,8 @@ const selectHabitacion = document.querySelector('#form-agregar-cliente select');
 const selectAcciones = document.querySelector('#form-acciones select');
 const selectEliminar = document.querySelector('#form-eliminar select');
 const tablaClientes = document.querySelector('#tabla-clientes');
+const inputNacimiento = document.querySelector('#edad');
+
 
 
 // funciones
@@ -31,6 +33,14 @@ class Cliente {
         this.id = id;
 
     }
+}
+
+/**
+ * Valida el input de fecha de nacimiento para que no se pueda poner una fecha mayor a la actual
+ */
+const validarInputDate = () => {
+    let fechaActual = new Date().toISOString().slice(0, 10);
+    inputNacimiento.setAttribute('max', fechaActual)
 }
 
 /**
@@ -220,6 +230,7 @@ const setearClientesStorage = (clientes) => {
 verificarStorage();
 traerHabitaciones();
 traerAcciones();
+validarInputDate();
 createOptions(selectEliminar, clientes);
 
 
