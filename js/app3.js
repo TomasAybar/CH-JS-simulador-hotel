@@ -246,8 +246,8 @@ formAgregarCliente.addEventListener('submit', (e) => {
     formAgregarCliente.reset();
 
     Swal.fire({
-        title: 'Felicitaciones!',
-        text: 'Cliente agregado con exito!',
+        title: '¡Felicitaciones!',
+        text: '¡Cliente agregado con exito!',
         icon: 'success',
     })
 
@@ -266,8 +266,8 @@ formEliminar.addEventListener('submit', (e) => {
     e.preventDefault();
 
     Swal.fire({
-        title: 'Atencion!',
-        text: 'Estas seguro de que deseas eliminar este cliente?',
+        title: '¡Atención!',
+        text: '¿Estás seguro de que deseas eliminar este cliente?',
         icon: 'warning',
         showDenyButton: true,
         confirmButtonText: 'Aceptar',
@@ -284,11 +284,11 @@ formEliminar.addEventListener('submit', (e) => {
 
             createOptions(selectEliminar, clientesFiltrados);
 
-            Swal.fire('Cliente eliminado con exito!', '', 'success')
+            Swal.fire('¡Cliente eliminado con éxito!', '', 'success')
 
         } else {
 
-            Swal.fire('La accion ha sido cancelada', '', 'info')
+            Swal.fire('La acción ha sido cancelada', '', 'info')
 
 
         }
